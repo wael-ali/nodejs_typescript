@@ -32,9 +32,10 @@ Typescript dose not undersatnd require to be able to use it we need install @typ
 ```
 $ npm install --save-dev @types/node
 ```
-let make typescript be aware of express:
+let make typescript be aware of express, body-parser:
 ```
-$ npm install --save-dev @types/express
+$ npm install --save-dev @types/express 
+$ npm install --save-dev @types/body-parswer 
 ```
 to let the vcode IDE more helpful we can tweak the tsconfig.json as follows
 ```
@@ -58,3 +59,69 @@ compile the .ts files into js:
 ```
 $ tsc
 ```
+create our routes for small todo app:
+```
+$ mkdir routes
+$ touch todo.ts
+```
+create the todo routes copy this code:
+```
+// routes/todo.ts
+
+import { Router } from 'express';
+
+const router = Router();
+
+router.get('/', (req, res, next) => {
+    res.json({todos: todos});
+});
+
+export default router;
+```
+use it in the app.ts
+```
+// app.ts
+import express from 'express';
+
+import todoRoutes from './routes/todo';
+
+const app = express();
+
+app.use(todoRoutes);
+
+app.listen(3000); 
+```
+create model folder for our custom types and interfaces
+```
+$ mkdir models
+$ touch models/appTypes.ts
+```
+Create our first type or interface
+```
+// modles/appTypes.ts
+
+export interface Todo {
+    id: string;
+    text: string;
+};
+```
+imported the new type/interface in our route and used it.
+and adding a post route
+```
+// routes/todo.ts
+.
+.
+import { Todo } from '../models/appTypes';
+
+const todos: Todo[] = [];
+.
+.
+
+router.post('/todo', (req, res, next) => {
+    const newTodo: Todo = {
+        id: new Date().toTimeString(),
+        text: req.body.text
+
+    };
+    todos.push(newTodo);
+});
