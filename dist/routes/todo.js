@@ -7,16 +7,17 @@ router.get('/', (req, res, next) => {
     res.json({ todos: todos });
 });
 router.post('/todo', (req, res, next) => {
+    const body = req.body;
     const newTodo = {
         id: new Date().getTime().toString(),
-        text: req.body.text
+        text: body.text
     };
     todos.push(newTodo);
     return res.status(201).json({ todo: newTodo });
 });
 router.put('/todo/:todoId', (req, res, next) => {
-    const tid = req.params.todoId;
-    console.log(tid);
+    const params = req.params;
+    const tid = params.todoId;
     const todoIndex = todos.findIndex(item => item.id === tid);
     if (todoIndex >= 0) {
         todos[todoIndex] = {
@@ -27,8 +28,9 @@ router.put('/todo/:todoId', (req, res, next) => {
     }
     res.status(404).json({ message: 'Not Found' });
 });
-router.delete('/todo/:id', (req, res, next) => {
-    const tid = req.params.id;
+router.delete('/todo/:todoId', (req, res, next) => {
+    const params = req.params;
+    const tid = params.todoId;
     const todoIndex = todos.findIndex(item => item.id === tid);
     if (todoIndex >= 0) {
         todos = todos.filter(item => item.id !== tid);

@@ -168,7 +168,29 @@ and use them in the post, put, delete routes
 const body = req.body as RequestBody;
 const params = req.params as RequestParams;
 ```
-# j
+## Working on project structure:
+Right now the js compiled files are at the same location as the ts files. but we that make the project less readable, so let save the compiled files in their own folder. to do so go to the tsconfig.js and uncommnet the **"outDir":"./"** and the folder as you want like:
+```
+.
+.
+"outDir": "./dist",
+.
+.
+```
+secondly lets move the ts files and folders into src, and delete js files
+```
+$ mkdir src
+$ mv models src
+$ mv routes src
+$ mv app.ts src
+// Deleting js files in src folder
+$ find src -type f -iname \*.js -delete
+$ rm app.js
+
+// Rebuild/ Recompile the project
+$ tsc
+
+
 
 
 
