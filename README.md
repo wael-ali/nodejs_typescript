@@ -106,14 +106,13 @@ export interface Todo {
 };
 ```
 imported the new type/interface in our route and used it.
-and adding a post route
 ```
 // routes/todo.ts
 .
 .
 import { Todo } from '../models/appTypes';
 
-const todos: Todo[] = [];
+let todos: Todo[] = [];
 .
 .
 
@@ -124,4 +123,52 @@ router.post('/todo', (req, res, next) => {
 
     };
     todos.push(newTodo);
+    return res.status(201).json({todo: newTodo});
 });
+
+router.put('/todo/:id', (req, res, next) => {
+    const tid = req.params.id;
+    const todoIndex = todos.findIndex(item => item.id === tid);
+    if (todoIndex >= 0){
+        todos[todoIndex] = {
+            id: tid,
+            text: req.body.text
+        };
+        return res.status(200).json({todo: todos[todoIndex]});
+    }
+    res.status(404).json({message: 'Not Found'});
+});
+
+router.delete('/todo/:id', (req, res, next) => {
+    const tid = req.params.id;
+    const todoIndex = todos.findIndex(item => item.id === tid);
+    if (todoIndex >= 0){
+        todos = todos.filter(item => item.id !== tid);
+        return res.status(200).json({message: 'Deleted successfully.'});
+    }
+    res.status(404).json({message: 'Not Found'});
+});
+```
+let us compile our app and run it.
+```
+$ tsc
+// node runs only js files.
+$ node app.js
+```
+you can test it with postman
+## other thing typescript offer for us is type casting:
+to avoid developers unwanted errors we can define new type aliases for the req.body and req.params as follows in **routes/todo.ts**
+```
+// types aliases
+type RequestBody = {text: string};
+type RequestParams = {todoId: string};
+```
+and use them in the post, put, delete routes
+```
+const body = req.body as RequestBody;
+const params = req.params as RequestParams;
+```
+# j
+
+
+
