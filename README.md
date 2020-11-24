@@ -189,8 +189,21 @@ $ rm app.js
 
 // Rebuild/ Recompile the project
 $ tsc
-
-
-
-
-
+```
+now let us add a start script to package.json file for easily run our application:
+```
+// package.json
+.
+.
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/app.js"
+  },
+.
+.
+```
+Now to run the app type in terminal:
+```
+$ npm install
+$ npm start
+```

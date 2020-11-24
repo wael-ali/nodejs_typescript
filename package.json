@@ -4,7 +4,8 @@
   "description": "``` $ cd to/your/empty/folder // create tsconfig.json file $ tsc --init  // turned to npm controlled project $ npm init ```",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/app.js"
   },
   "author": "",
   "license": "ISC",
